@@ -1,0 +1,27 @@
+{
+  "name": "csci2720project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1155078385/CSCI2720project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1155078385/CSCI2720project/issues"
+  },
+  "homepage": "https://github.com/1155078385/CSCI2720project#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.8",
+    "express": "^4.16.4",
+    "js-sha256": "^0.9.0",
+    "mongoose": "^5.3.15",
+    "multer": "^1.4.1"
+  }
+}

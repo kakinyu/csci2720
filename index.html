@@ -1,0 +1,358 @@
+<!-- Ng Ka Sing 1155078385 YIP TSz Hong 1155079606 LEUNG Tsz Hin 1155079351-->
+
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Approved fund-raising activities</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Staatliches" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="script.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand navbar-light bg-light sticky-top">
+	<span class="navbar-brand">A SOCIAL NETWORK FOR EVENTS</span>
+
+	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+		</ul>
+		<!-- <form class="form-inline my-2 my-lg-0">
+			<input class="form-control mr-sm-2" type="search" placeholder="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form> -->
+		<div class="notlogined form-inline my-2 my-lg-0">
+			<form id='loginform' style='margin-bottom:0px;'>
+				<span>Login ID:</span>
+				<input id="username" class="form-control mr-sm-2" value="1234"></input>	
+				<span>Password:</span>
+				<input id="password" class="form-control mr-sm-2" value="1234"></input>	
+				<button type="button" id="loginButton" class="btn btn-success">Login</button>
+				<button type="button" id="createACButton" class="btn btn-primary">Create Account</button>
+				<button type="button" id="adminButton" class="btn btn-secondary">Login As Admin</button>
+			</form>
+		</div>
+		<div class="logined">
+			<button type="button" id="logoutButton" class="btn btn-secondary">Logout</button>
+			<!-- <button id="favlistButton" class="btn btn-primary">Get Favourite!</button> -->
+			<div id="status" style="float:right;padding-left:10px;">Guest</div>
+		</div>
+	</div>
+</nav>
+<header>
+	<h1>A Social Network for Events</h1>
+	<h2>Approved Fund-Raising Activities</h2>
+</header>
+<div class="container">
+	  <div class="hori row m-0">
+				<section id="aboutme" class="col-xs-12 col-sm col-lg-8 p-3 bg-primary text-white col-xs-12" >
+					<h2 class="move">About This Project</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr class="text-white">
+								<th scope="col">Group Member</th>
+								<th scope="col">Wordload</th>
+							</tr>
+						</thead>
+						<tbod>
+							<tr class="text-white">
+								<td>Ng Ka Sing<br>1155078385</td>
+								<td>
+									<ul>
+										<li>List all events in a table, and allow sorting of the table with one of the listed fields</li>
+										<li>Search for events which contain certain keywords in one field chosen by the user
+which will result in a table of event results similar to that in the above item</li>
+										<li>A separate view for one single event, containing the event details and also user
+comments, where users can add new comments (non-threaded)</li>
+										<li>Flush data</li>
+										<li>CRUD event data in the local database</li>
+										<li>Browser history</li>
+									</ul>
+								</td>
+							</tr>
+							<tr class="text-white">
+								<td>Yip Tsz Hong<br>1155079606</td>
+								<td>
+									<ul>
+										<li>A separate view for one single event, containing the event details and also user
+comments, where users can add new comments (non-threaded)</li>
+										<li>Add events into a list of favourite events, and see the list in another view (flexible
+implementation)</li>
+										<li>See username in the top right of screen, and be able to log out</li>
+										<li>CRUD user data</li>
+										<li>Login/Logout as user and Admin</li>
+										<li>User interface</li>
+									</ul>
+								</td>
+							</tr>
+							<tr class="text-white">
+								<td>LEUNG Tsz Hin<br>1155079351</td>
+								<td>
+									<ul>
+										<li>CRUD event data</li>
+										<li>CRUD user data</li>
+										<li>Obtain event data from CSV file</li>
+										<li>Browser history</li>
+										<li>User interface</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section class="col-xs-12 col-sm col-lg-4 p-3 bg-success text-white col-xs-12">
+					<h2 class="move">HOW-TO</h2>
+					<p><strong>Flush data</strong>: get the JSON file from the website. First, we get the total number of data in the request. Since the number of maximum loaded record is restricted to 100 (dafault 10), so we split up the process by (total number of data / 100) to get all data.</p>
+					<p><strong>Search</strong>: retrieve the data from mongodb with search keyword. If the serach field is empty, all data will be retrived. Otherwise, we will use regex to find all matched keywords in the database.</p>
+					<p><strong>Password</strong>: we use SHA-256 library to hash the password string, so that this hashed string will be stored in mongodb. In additoin, everytime the user enter the password, we convert it to hash string to authorize.</p>
+				</section>
+			</div>
+			<div class="hori row m-0">
+				<section id="course" class="col-xs-12 col-sm bg-warning text-dark col-xs-12">
+						<h2 class="move">Design Data Schemas and Models</h2>
+						
+							<div class="gallery">
+								<img src="EventSchema.png" alt="Cinque Terre">
+								<div class="desc">Event Schema</div>
+						
+						</div>
+						
+						<div class="gallery">
+							<img src="UserSchema.png" alt="Cinque Terre">
+							<div class="desc">User Schema</div>
+						</div>
+						<h2 class="move">CUHK Academic Honesty</h2>
+						<div class="gallery">
+							<img src="IMG_6738.jpg" alt="Cinque Terre">
+							<div class="desc">We have read this article</div>
+						</div>
+			</div>
+			
+			
+	<div id="accordion">
+		<!-- Tab1 -->
+			<div class="card admin bbcolor">
+				<div class="card-header" id="headingOne">
+					<h5 class="mb-0">
+						<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id='updateuser'>
+							User Info
+						</button>
+					</h5>
+				</div>
+				<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+					<div class="card-body">
+						<div class='usercreate' style='margin-bottom: 10px;'>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Username: </span>
+									</div>
+									<input type="text" class="form-control" id="createUsername">
+									<div class="input-group-prepend">
+											<span class="input-group-text" id="">Password: </span>
+										</div>
+									<input type="text" class="form-control" id="createPassword">
+									<div class="input-group-append">
+										<button class="btn btn-outline-primary" type="button" id='createuser'>Create</button>
+									</div>
+								</div>
+						</div>
+						<div id='alluser'>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="">First and last name</span>
+								</div>
+								<input type="text" class="form-control">
+								<div class="input-group-prepend">
+										<span class="input-group-text" id="">First and last name</span>
+									</div>
+								<input type="text" class="form-control">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button">Button</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Tab2 -->
+			<div class="card admin bbcolor">
+				<div class="card-header" id="headingTwo">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Add New Event
+						</button>
+					</h5>
+				</div>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+					<div class="card-body">
+						<div id="newEventForm">
+							<div class="form-group">
+								<label for="activityName">Activity Name</label>
+								<input type="text" id="activityName" name="activityName" class="form-control" >
+							</div>
+							<div class="form-group">
+								<label for="dateTime">Date and Time</label>
+								<input type="datetime-local" id="dateTime" name="dateTime" class="form-control" >
+							</div>
+							<div class="form-group">
+								<label for="organizationName">Organization Name</label>
+								<input type="text" id="organizationName" name="organizationName" class="form-control" >
+							</div>
+							<div class="form-group">
+								<label for="locationName">Location Name</label>
+								<input type="text" id="locationName" name="locationName" class="form-control" >
+							</div>
+							<div class="form-group">
+								<label for="departmentName">Department Name</label>
+								<input type="text" id="departmentName" name="departmentName" class="form-control" >
+							</div>
+							<div class="form-group">
+								<label for="enquiryContact">Enquiry Contact</label>
+								<input type="text" id="enquiryContact" name="enquiryContact" class="form-control" >
+							</div>
+							<button class="btn btn-primary" id="newEventButton">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Tab3 -->
+			<div class="card admin bbcolor">
+				<div class="card-header" id="headingFlush">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFlush" aria-expanded="false" aria-controls="collapseFlush">
+							Flush data from online data set
+						</button>
+					</h5>
+				</div>
+				<div id="collapseFlush" class="collapse" aria-labelledby="headingFlush" data-parent="#accordion">
+					<div class="card-body" style="text-align:center">
+						<button id="flushData">Flush</button>
+					</div>
+				</div>
+			</div>
+			<div class="card logined bbcolor">
+				<div class="card-header" id="headingGet">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseGet" aria-expanded="false" aria-controls="collapseGet">
+							Get data from local database
+						</button>
+					</h5>
+				</div>
+				<div id="collapseGet" class="collapse" aria-labelledby="headingGet" data-parent="#accordion">
+					<div class="card-body" style="text-align:center">
+						<button id="getData">Get</button>
+					</div>
+				</div>
+			</div>
+			<div class="card admin bbcolor">
+				<div class="card-header" id="headingCSV">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed " data-toggle="collapse" data-target="#collapseCSV" aria-expanded="false" aria-controls="collapseCSV">
+							Upload CSV to local database
+						</button>
+					</h5>
+				</div>
+				<div id="collapseCSV" class="collapse" aria-labelledby="headingCSV" data-parent="#accordion">
+					<div class="card-body" style="text-align:center">
+						<form id="uploadCSVForm">
+							<input type="file" id="eventsCSV" name="eventsCSV">
+							<span data-toggle="tooltip" data-html="true" data-container="body" title="<b>CSV file in the following format: </b><br> eventId,activityName,dateTime,organizationName,locationName,departmentName,enquiryContact <br> &lt; Number &gt;,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt  <br> &lt; Number &gt;,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt,&lt; String &gt <br> ......">&#x1f6c8;Instructions</span>
+							<button type="submit" id="uploadCSVButton" class="btn btn-primary">Upload CSV</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		<!-- Tab5 -->
+			<div class="card logined bbcolor">
+					<div class="card-header" id="headingFav">
+						<h5 class="mb-0">
+							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFav" aria-expanded="false" aria-controls="collapseFav" id="favlistButton">
+								My Favourite Events!
+							</button>
+						</h5>
+					</div>
+					<div id="collapseFav" class="collapse" aria-labelledby="headingFav" data-parent="#accordion">
+						<div class="card-body">
+							<div class="card-columns" id="favlist">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title">Card title that wraps to a new line</h5>
+										<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+
+<audio id="flushSound">
+	<source src="salamisound-3780183-toilets-pressure-flushing.mp3" type="audio/mpeg">
+</audio>
+
+<div class="content">
+	<div id="search" class="rounded sticky-top stickytoptop">
+		<h2>Search</h2>
+		<input type="text" id="searchBox"></input>
+		<select>
+			<option value="activityName">Activity Name</option>
+			<option value="dateTime">Schedule</option>
+			<option value="organizationName">Organization Name</option>
+			<option value="locationName">Location Name</option>
+			<option value="departmentName">Department Name</option>
+			<option value="enquiryContact">Enquiry Contact</option>
+		</select>
+		<button id="searchTable" class="btn btn-outline-primary">Search in table</button>
+	</div>
+	<table id="eventTable" class="table table-hover">
+		<thead>
+			<tr class="sticky-top">
+				<td data-col="activityName" scope="col">Activity Name</td>
+				<td data-col="dateTime" scope="col">Schedule</td>
+				<td data-col="organizationName" scope="col">Organization Name</td>
+				<td data-col="locationName" scope="col">Location Name</td>
+				<td data-col="departmentName" scope="col">Department Name</td>
+				<td data-col="enquiryContact" scope="col">Enquiry Contact</td>
+				<td data-col="favourite" scope="col">Favourite</td>
+			</tr>
+		</thead>
+		<tbody id="eventTableBody"></tbody>
+	</table>
+	
+</div>
+
+<div class="load">
+	<div class="loader"></div>
+	<p>Loading...</p>
+</div>
+
+<div class="sidenav">
+</div>
+
+<div class="modal fade" id="eventModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h2 class="modal-title">Event</h2>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<ul class="modal-body list-unstyled"></ul>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="eventSubmit">Submit</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" id="eventDelete">Delete</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="eventClose">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>
+</html>
